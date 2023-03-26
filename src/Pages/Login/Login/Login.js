@@ -1,30 +1,49 @@
 import { useRef } from "react";
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
+import auth from "../../../firebase.init";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Login = () => {
 
     const emailRef = useRef('');
     const passwordRef = useRef('');
     const navigate = useNavigate();
-
+    const [signInWithEmailAndPassword, user, error] = useSignInWithEmailAndPassword(auth);
+    const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
+    let errorElement;
 
     const handleForm = (e) => {
         e.preventDefault();
 
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
-        console.log(email, password)
 
+        signInWithEmailAndPassword(email, password);
     }
     const navigateRegister = () => {
         navigate('/register')
     }
 
+    if (error) {
+        errorElement = <p className="text-red-700">Error: {error?.message}</p>
+
+    }
+
+    if (user) {
+        navigate('/home')
+    }
+
+    const forgetPassword = async () => {
+        const email = emailRef.current.value;
+        await sendPasswordResetEmail(email)
+        alert('Sent email')
+    }
 
     return (
         <div className='bg-gray-300 p-4 rounded-lg w-1/3 mt-12 mx-auto'>
             <h1 className="text-3xl text-blue-600 my-4">Please Login</h1>
-            <form className="w-full max-w-sm" onSubmit={handleForm}>
+            <form className="w-full " onSubmit={handleForm}>
                 <div className="mb-4">
                     <label className="block text-gray-700 font-bold mb-2" htmlFor="username">
                         Email
@@ -46,8 +65,11 @@ const Login = () => {
 
                 <div>
                     <p>New to Genius Car? <span className="text-blue-400 cursor-pointer underline" onClick={navigateRegister}>Please Register</span></p>
+                    <p>Forget Password ? <span className="text-blue-400 cursor-pointer underline" onClick={forgetPassword}>Reset Password</span></p>
                 </div>
+                {errorElement}
             </form>
+            <SocialLogin></SocialLogin>
         </div>
 
     );

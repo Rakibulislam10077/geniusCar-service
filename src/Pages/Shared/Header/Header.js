@@ -1,7 +1,16 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
+import auth from '../../../firebase.init';
 
 const Header = () => {
+    const [user] = useAuthState(auth);
+
+    const handleSignOut = () => {
+        signOut(auth)
+    }
+
     return (
         <header>
             <nav className="px-2 py-4 bg-blue-400 border-gray-200 dark:bg-gray-900 dark:border-gray-700">
@@ -29,14 +38,19 @@ const Header = () => {
                                 <Link to='/contact' className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-white md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</Link>
                             </li>
                             <li>
-                                <Link to='login' className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"><button className='bg-white rounded py-1 px-3'>Login</button></Link>
+                                {
+                                    user ?
+                                        <Link onClick={handleSignOut} to='login' className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"><button className='bg-white rounded py-1 px-3'>Log Out</button></Link>
+                                        :
+                                        <Link to='login' className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"><button className='bg-white rounded py-1 px-3'>Login</button></Link>
+                                }
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
 
-        </header>
+        </header >
     );
 };
 
