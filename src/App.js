@@ -10,6 +10,7 @@ import ServiceDetail from './Pages/ServiceDetail/ServiceDetail';
 import NotFound from './Pages/Shared/NotFoud/NotFound';
 import Login from './Pages/Login/Login/Login';
 import Register from './Pages/Login/Register/Register';
+import RequireAuth from './Pages/Login/RequireAuth/RequireAuth';
 
 
 function App() {
@@ -22,7 +23,11 @@ function App() {
         <Route path='/about' element={<About></About>}></Route>
         <Route path='/service/:serviceId' element={<ServiceDetail></ServiceDetail>}></Route>
         <Route path='/services' element={<Service></Service>}></Route>
-        <Route path='/expert' element={<Experts></Experts>}></Route>
+        <Route path='/expert' element={
+          <RequireAuth>
+            <Experts></Experts>
+          </RequireAuth>
+        }></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
         <Route path='*' element={<NotFound></NotFound>}></Route>
