@@ -6,6 +6,7 @@ import SocialLogin from "../SocialLogin/SocialLogin";
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import PageTitle from "../../PageTitle/PageTitle";
 
 const Login = () => {
 
@@ -50,6 +51,7 @@ const Login = () => {
 
     return (
         <div className='bg-gray-300 p-4 rounded-lg w-1/3 mt-12 mx-auto'>
+            <PageTitle title="Login"></PageTitle>
             <h1 className="text-3xl text-blue-600 my-4">Please Login</h1>
             <form className="w-full " onSubmit={handleForm}>
                 <div className="mb-4">

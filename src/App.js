@@ -11,6 +11,8 @@ import NotFound from './Pages/Shared/NotFoud/NotFound';
 import Login from './Pages/Login/Login/Login';
 import Register from './Pages/Login/Register/Register';
 import RequireAuth from './Pages/Login/RequireAuth/RequireAuth';
+import AddService from './Pages/AddService/AddService';
+import ManageService from './Pages/ManageService/ManageService';
 
 
 function App() {
@@ -26,6 +28,16 @@ function App() {
         <Route path='/expert' element={
           <RequireAuth>
             <Experts></Experts>
+          </RequireAuth>
+        }></Route>
+        <Route path='/adduser' element={
+          <RequireAuth>
+            <AddService></AddService>
+          </RequireAuth>
+        }></Route>
+        <Route path='/manage' element={
+          <RequireAuth>
+            <ManageService></ManageService>
           </RequireAuth>
         }></Route>
         <Route path='/login' element={<Login></Login>}></Route>

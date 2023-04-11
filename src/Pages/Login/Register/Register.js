@@ -4,12 +4,15 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-fireb
 import { useState } from 'react';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
+
+
 const Register = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [agree, setAgree] = useState(false)
+
 
     const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true })
     const [updateProfile] = useUpdateProfile(auth);
@@ -39,7 +42,7 @@ const Register = () => {
 
         await createUserWithEmailAndPassword(email, password)
         await updateProfile({ displayName: name });
-        navigate('/home');
+        navigate('/home')
 
     }
     return (
